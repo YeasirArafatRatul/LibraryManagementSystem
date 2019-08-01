@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<head> 
+	<title>Registration</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+</head>
+<body>
+	<h2 align="center">Registration</h2>
+	<div class="content-section" align="center">
+		<div class = "col-sm-3">
+			<form method='POST'>
+				{% csrf_token %}
+				{{ form|crispy }} <!-- {{ form.as_p }}   -->    
+				<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Sign Up</button> 
+				</div>
+			</form>
+			<div class="border-top pt-4">
+				<small class="text-muted">Already Have An Account?<a class="ml-2" href="{% url 'login' %}">Sign In</a>
+				</small>
+			</div>
+		</div>
+	</div>
+</body>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+
+{% block content %}
+    <!-- Main Section -->
+<main>
+  <div class="container">
+      <h3 class="heading font-weight-light">Books</h3>
+      <br/>
+
+
+    <!-- <div class="container main-part"> -->
+
+    {% if books %}
+    <section class="text-center mb-4">
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+      {% for book in books %}
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 mb-4">
+
+            <!--Card-->
+            <div class="card">
+              <!--Card image-->
+              <div class="view overlay">
+                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
+                  alt="">
+                <a>
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <!--Card image-->
+              <!--Card content-->
+              <div class="card-body text-center">
+                <h4>
+                  <strong>
+                    <a href="{% url 'book-detail' book.slug %}" class="dark-grey-text">{{book.name}}
+                      {% comment %} <span class="badge badge-pill danger-color">NEW</span> {% endcomment %}
+                    </a>
+                  </strong>
+                </h4>
+                <h5 class="font-weight-bold blue-text">
+                  <small>by {{ book.author}}</small>
+                </h5>
+                <!--Category & Title-->
+                <a href="#" class="grey-text">
+                   <small>
+                      <h6>Category {{ book.book_category.category_name}}</h6>
+                  </small>
+                </a>
+
+              </div>
+              <!--Card content-->
+            </div>
+            <!--Card-->
+          </div>
+          <!--Grid column-->
+     {% endfor %}
+        </div>
+        <!--Grid row-->
+  </section>
+      <!--Section-->
+
+  {% else %}
+    <p class="d-block font-weight-light my-2">No books available</p>
+  {% endif %}
+  
+  <!--Pagination-->
+
+      {% if is_paginated %}
+      <nav class="d-flex justify-content-center wow fadeIn">
+        <ul class="pagination pg-blue">
+
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+
+          <li class="page-item active">
+            <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+
+    </div>
+  </main>
+
+<!-- Main Section ends-->
+{% endblock %}
+

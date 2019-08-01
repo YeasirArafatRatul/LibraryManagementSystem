@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	
+	<div class="container" align="center">
+		<div class = " col-sm-3">
+			<form class = "box" method='POST'action='.'>
+				<h2>Login</h2>
+				{% csrf_token %}
+				{{ form|crispy }}<!--  {{ form.as_p }} -->
+				<input type="submit" value="Login"/>
+			</form>
+			<div class="border-top pt-4">
+				<small class="text-muted">Need An Account?<a class="ml-2" href="{% url 'register' %}">Sign Up</a>
+				</small>
+		</div>
+	</div>
+</body>
+{% endblock %}
