@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -105,3 +106,6 @@ class Borrow(models.Model):
 
     def get_book_items(self):
         return self.items.all()
+
+    def get_return_date(self):
+        return self.borrow_date + datetime.timedelta(days=7)

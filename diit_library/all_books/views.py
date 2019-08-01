@@ -35,9 +35,13 @@ class BorrowSummuryView(LoginRequiredMixin, View):
         try:
             borrow = Borrow.objects.get(
                 borrower=self.request.user, is_borrowed=False)
+            context = {
+                'object': borrow
+            }
+            return render(self.request, 'all_books/borrow_list.html', context)
         except ObjectDoesNotExist:
             messages.error(self.request, "You didn't add any book in the list")
-            return redirect('/')
+            return redirect('home')
 
         return render(self.request, "all_books/borrow_list.html")
 

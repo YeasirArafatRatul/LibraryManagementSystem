@@ -12,7 +12,7 @@
             <th scope="col">#</th>
             <th scope="col">Book title</th>
             <th scope="col">Author</th>
-            <th scope="col">Borrow Date</th>
+            <th scope="col">Add Date</th>
             <th scope="col">Return Date</th>
         </tr>
         </thead>
@@ -21,12 +21,14 @@
         {% for book_item in object.items.all %}
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ book_item.item.title }}</td>
-            <td>{{ book_item.item.author }}</td>
+            <td>{{ book_item.borrow_book.name }}</td>
+            <td>{{ book_item.borrow_book.author }}</td>
+            <td>{{ book_item.date_added }}</td>
+            <td>{{ object.get_return_date }}</td>
             <td>
-                <a href="{% url 'remove-single-item-from-cart' book_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
+                {% comment %} <a href="{% url 'remove-from-cart' book_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
                 {{ book_item.borrow_date }}
-                <a href="{% url 'add-to-cart' book_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a>
+                <a href="{% url 'add-to-cart' book_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a> {% endcomment %}
             </td>
             {% comment %} <td>
             {% if book_item.item.discount_price %}
@@ -44,12 +46,21 @@
         <tr>
             <td colspan='5'>Your list is empty</td>
         </tr>
+        {% endfor %}
+        <br>
         <tr>
-            <td colspan="5">
-            <a class='btn btn-primary float-right' href='/'>Continue Adding Books</a>
+        <td colspan="5">
+        </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+             <a class='btn btn-primary float-right' href="{% url 'home' %}">Continue Adding Books</a>
+             </td>
+             <td colspan="5">
+            <a class='btn btn-warning float-right' href="#">Confirm Borrow Request</a>
             </td>
         </tr>
-        {% endfor %}
+        
         {% if object.coupon %}
         <tr>
             <td colspan="4"><b>Coupon</b></td>
