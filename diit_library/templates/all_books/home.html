@@ -53,10 +53,11 @@
                 <!--Category & Title-->
                 <a href="#" class="grey-text">
                    <small>
-                      <h6>Category {{ book.book_category.category_name}}</h6>
+                      <h6>Category {{ book.book_category.category_name }}</h6>
                   </small>
                 </a>
-
+                <a href="{{ book.get_add_to_cart_url }}"  class="btn btn-primary btn-md my-0 p">Add To List</a>
+                <a href="{% url 'book-detail' book.slug %}"  class="btn btn-warning btn-md my-0 p">Read More</a>
               </div>
               <!--Card content-->
             </div>

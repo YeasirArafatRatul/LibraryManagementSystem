@@ -40,12 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'crispy_forms',
 
-
+    # my app
     'accounts',
     'all_books',
-    # 'book_cart',
+    'payment_system',
+
+    # third party app
+    # 'bkash',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +145,15 @@ STATICFILES_DIRS = (
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'home'
+
+
+# bKash
+# BKASH_APP_KEY = // bkash app key
+# BKASH_APP_SECRET = // bkash app secret
+# BKASH_APP_USERNAME = // bkash app username
+# BKASH_APP_PASSWORD = // bkash app password
+# BKASH_APP_VERSION = // bkash app version
+# BKASH_APP_BASE_URL = // bkash app base url
+# BKASH_APP_PAYMENT_TOKEN_GRANT_URL = '%s/%s/checkout/token/grant' % (BKASH_APP_BASE_URL, BKASH_APP_VERSION)
+# BKASH_APP_PAYMENT_CREATE_URL = '%s/%s/checkout/payment/create' % (BKASH_APP_BASE_URL, BKASH_APP_VERSION)
+# BKASH_APP_PAYMENT_EXECUTE_URL = '%s/%s/checkout/payment/execute' % (BKASH_APP_BASE_URL, BKASH_APP_VERSION)

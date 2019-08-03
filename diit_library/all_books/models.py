@@ -6,6 +6,7 @@ from django.db.models.signals import pre_save
 from accounts.models import UserProfile, User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 # from book_cart.views import add_to_cart
 
 
@@ -66,9 +67,11 @@ class BookNumber(models.Model):
         return self.book_code
 
 
-# Borrow functionalities
-class Payment(models.Model):
-    pass
+"""
+
+Borrow functionalities
+
+"""
 
 
 class BorrowItem(models.Model):
@@ -92,8 +95,8 @@ class Borrow(models.Model):
     borrower = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True)
     is_borrowed = models.BooleanField(default=False)
-    fine = models.ForeignKey(
-        Payment, null=True, on_delete=models.SET_NULL, blank=True)
+    # fine = models.ForeignKey(
+    # Payment, null=True, on_delete=models.SET_NULL, blank=True)
     borrow_date = models.DateTimeField(auto_now=True)
     return_date = models.DateTimeField(null=True)
 
@@ -109,3 +112,6 @@ class Borrow(models.Model):
 
     def get_return_date(self):
         return self.borrow_date + datetime.timedelta(days=7)
+
+    def get_borrow_confirmation(self):
+        return reverse('confirm-request', kwargs={"pk": self.pk})

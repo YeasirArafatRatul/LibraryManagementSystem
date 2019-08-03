@@ -1,18 +1,20 @@
 from .models import Book
 from accounts.models import UserProfile, User
 from .models import Borrow, BorrowItem
+# from .forms import ConfirmationForm
 
+import datetime
 from django.db.models import Q
 from django.utils import timezone
 from django.conf import settings
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -71,8 +73,8 @@ def add_to_cart(request, slug):  # slug is the book-slug
         borrow = Borrow.objects.create(
             borrower=request.user, borrow_date=borrow_date)
         borrow.items.add(borrow_item)
-        messages.info(request, "Item is added to the borrow list 2.")
-    return redirect("book-detail", slug=slug)
+        messages.info(request, "Item is added to the borrow list .")
+    return redirect("home")
 
 
 @login_required
@@ -90,13 +92,53 @@ def remove_from_cart(request, slug):
             borrow_item.delete()
             # borrow.items.remove(borrow_item)
             messages.info(request, "Item is removed from the borrow list.")
+            return redirect("borrow-list")
         else:
             messages.info(request, "Item is not in the borrow list.")
             return redirect("book-detail", slug=slug)
     else:
         messages.info(request, "Item is not in the borrow list.")
-        return redirect("book-detail", slug=slug)
-    return redirect("book-detail", slug=slug)
+        return redirect("borrow-list")
+    return redirect("borrow-list")
+
+
+class PaymentView(View):
+
+    def get(self, *args, **kwargs):
+        return render(self.request, "payment.html")
+
+
+@login_required
+def confirm(request, pk):
+    if request.method == 'POST':
+        try:
+            borrow = Borrow.objects.get(
+                pk=pk, borrower=request.user, is_borrowed=False)
+            borrow.is_borrowed = True
+            borrow.save()
+            messages.info(
+                request, "Your Request Is Submitted To The Librarian")
+        except Borrow.DoesNotExist:
+            return HttpResponse('Product not found', status=404)
+        except Exception:
+            return HttpResponse('Internal Error', status=500)
+    else:
+        return HttpResponse('Method not allowed', status=405)
+    return redirect("home")
+
+
+# class ConfirmView(View):
+#     def get(self, *args, **kwargs):
+#         return render(self.request, "all_books/borrow_list.html")
+
+#     def post(self, *args, **kwargs):
+#         borrow = Borrow.objects.get(
+#             borrower=self.request.user, is_borrowed=False)
+#         borrow.is_borrowed = True
+#         borrow.borrow_date = datetime.now()
+#         borrow.return_date = borrow.borrow_date + datetime.timedelta(days=7)
+#         borrow.save()
+#         return redirect('home')
 
 
 @login_required

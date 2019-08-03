@@ -39,12 +39,7 @@
               </a>
             </div>
 
-            {% comment %} <p class="lead">
-              <span class="mr-1">
-                <del>$200</del>
-              </span>
-              <span>$100</span>
-            </p> {% endcomment %}
+
 
             <p class="lead font-weight-bold">Description</p>
 
@@ -52,19 +47,12 @@
               sint voluptatibus!
               Beatae sit assumenda asperiores iure at maxime atque repellendus maiores quia sapiente.</p>
 
-            {% comment %} <form class="d-flex justify-content-left">
               <!-- Default input -->
-              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to List
-                <i class="fas fa-shopping-cart ml-1"></i>
-              </button>
-
-            </form> {% endcomment %}
-              <!-- Default input -->
-              <a href="{{ object.get_add_to_cart_url }}"  class="btn btn-primary btn-md my-0 p">Add to List
-                <i class="fas fa-shopping-cart ml-1"></i>
+              <a href="{{ object.get_add_to_cart_url }}"  class="btn btn-primary btn-md my-0 p">+ Add
+              
               </a>
-               <a href="{{ object.get_remove_from_cart_url }}"  class="btn btn-danger btn-md my-0 p">Remove From List
-                <i class="fas fa-shopping-cart ml-1"></i>
+               <a href="{{ object.get_remove_from_cart_url }}"  class="btn btn-danger btn-md my-0 p">- Remove
+                
               </a>
 
           </div>

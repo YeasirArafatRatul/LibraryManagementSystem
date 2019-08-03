@@ -6,13 +6,39 @@
 
 	<!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    
 
   <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'static_files/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'static_files/css/main.css' %}">
+  <style type="text/css">
+    html,
+    body,
+    header,
+    .carousel {
+      height: 60vh;
+    }
+    @media (max-width: 740px) {
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+    @media (min-width: 800px) and (max-width: 850px) {
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+  </style>
 	{% if title %}
 	<title>DIIT Library - {{ title }}</title>
 	{% else %}
@@ -22,51 +48,54 @@
 
 
    <body>
-   	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+   	<nav class="navbar navbar-expand-lg navbar-light white scrolling-navbar">
+     {% comment %} navbar-light bg-white {% endcomment %}
+
    	<div class="container">
-	  <a class="navbar-brand" href="">
+	  
       
 	<!-- image  -->
     <img src="media\pg.jpg" width="30" height="30" class="d-inline-block align-top" alt=""></a>
 
-  	<span class="navbar-brand mb-0 h1">DIIT Library</span>
+  	<span class="navbar-brand nav-link mb-0 h1" href="{% url 'home' %}">D I I T-LIBRARY</span>
+
   	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
   	<span class="navbar-toggler-icon"></span>
-
   	</button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar Left Side -->
 	    <ul class="navbar-nav mr-auto">
-	      <li class="nav-item active">
-	        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+	      <li class="nav-item">
+	        <a class="nav-link waves-effect" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
 	      </li>
-	      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown </a>
-		       
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			          <a class="dropdown-item" href="#">Action</a>
-			          <a class="dropdown-item" href="#">Another action</a>
-			          <div class="dropdown-divider"></div>
-			          <a class="dropdown-item" href="#">Something else here</a>
-			    </div>
+      </ul>
+
+      <form class="form-inline my-2 my-lg-0">
+	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	    </form>
+
+			<!-- Navbar Right Side -->
+        <ul class="navbar-nav nav-flex-icons">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{% url 'borrow-list' %}" class="nav-link waves-effect">
+              <span class="clearfix d-none d-sm-inline-block"> Borrow List </span>
+              <i class="fas fa-book"></i><span class="badge red z-depth-1 mr-1"> 
+              {{ request.user|cart_item_count }}</span>
+    
+            </a>
           </li>
 
-			    <!-- Navbar Right Side -->
-          {% if user.is_authenticated %}
-            <li>
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-            </li>
             <li>
              <a class="nav-item nav-link" href="#">Profile</a> {% comment %} {% url 'profile' %} {% endcomment %}
              </li>
-             <ul class= "navbar-nav nav-flex-icons">
-             <li class="nave-item">
-             <a class="nav-link waves-effect">
-             <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
-             <i class="fas fa-shopping-cart"></i>
-             <span class="clearfix d-none d-sm-inline-block">Borrow List</span>
-             </a>
-             </li>
+             
+            <li>
+              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+           
              </ul>
           {% else %}
           	<li>
@@ -77,10 +106,7 @@
           	</li>
           {% endif %}
         </ul>
-	    <form class="form-inline my-2 my-lg-0">
-	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-	    </form>
+	
 	  </div> 
 	</div>
 </nav>
@@ -119,6 +145,8 @@
   <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+  
+  <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
   <!-- Initializations -->
   <script type="text/javascript">
     // Animations initialization

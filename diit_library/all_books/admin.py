@@ -5,7 +5,8 @@ from .models import Borrow, BorrowItem
 
 
 class BorrowAdmin(admin.ModelAdmin):
-    list_display = ('borrower', 'ref_code', 'borrow_date', 'return_date')
+    list_display = ('borrower', 'ref_code', 'borrow_date',
+                    'return_date', 'is_borrowed')
     list_filter = ('borrower', 'items', 'ref_code',
                    'borrow_date', 'return_date')
 

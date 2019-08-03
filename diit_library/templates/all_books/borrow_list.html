@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <main>
     <div class="container">
 
     <div class="table-responsive text-nowrap">
-    <h2> Request For These Books </h2>
+    <h4 text-align="center"> Your Books List </h4>
     <table class="table">
         <thead>
         <tr>
@@ -14,6 +15,7 @@
             <th scope="col">Author</th>
             <th scope="col">Add Date</th>
             <th scope="col">Return Date</th>
+            <th scope="col">Remove from list</th>
         </tr>
         </thead>
 
@@ -25,41 +27,70 @@
             <td>{{ book_item.borrow_book.author }}</td>
             <td>{{ book_item.date_added }}</td>
             <td>{{ object.get_return_date }}</td>
-            <td>
-                {% comment %} <a href="{% url 'remove-from-cart' book_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
-                {{ book_item.borrow_date }}
-                <a href="{% url 'add-to-cart' book_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a> {% endcomment %}
-            </td>
-            {% comment %} <td>
-            {% if book_item.item.discount_price %}
-                ${{ book_item.get_total_discount_item_price }}
-                <span class="badge badge-primary">Saving ${{ book_item.get_amount_saved }}</span>
-            {% else %}
-                ${{ book_item.get_total_item_price }}
-            {% endif %} 
-            <a style='color: red;' href="{% url 'remove-from-cart' order_item.item.slug %}">
-                <i class="fas fa-trash float-right"></i>
-            </a>
-            </td>{% endcomment %}
+            <td ><a class="btn btn-danger btn-md my-0 p ml-2" href="{% url 'remove-from-cart' book_item.borrow_book.slug %}">X Remove</a>
+            
+            </td> 
         </tr>
         {% empty %}
         <tr>
             <td colspan='5'>Your list is empty</td>
         </tr>
         {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="col-sm-3">
+        <a class="btn btn-outline-info btn-md my-0 p" href="{% url 'home' %}">Continue Adding Books</a>
+        <form  action="{{ object.get_borrow_confirmation }}" method="POST">
+				{% csrf_token %}
+				  
+				<div class="form-row">
+				<button class="btn btn-outline-info" type="submit">Confirm</button> 
+				</div>
+			</form> 
+        {% comment %} <a class="btn btn-warning btn-md my-0 p" href="{% url 'confirm-request' %}">Proceed to Final Request</a> {% endcomment %}
+        </div>
+
+    </div>
+
+    </div>
+  </main>
+
+{% endblock content %}
+
+
+
+
+ {% comment %}
+             <td>
+                <a href="{% url 'remove-from-cart' book_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
+                {{ book_item.borrow_date }}
+                <a href="{% url 'add-to-cart' book_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a> 
+            </td>
+            <td>
+                {% if book_item.item.discount_price %}
+                    ${{ book_item.get_total_discount_item_price }}
+                    <span class="badge badge-primary">Saving ${{ book_item.get_amount_saved }}</span>
+                {% else %}
+                    ${{ book_item.get_total_item_price }}
+                {% endif %} 
+                <a style='color: red;' href="{% url 'remove-from-cart' order_item.item.slug %}">
+                    <i class="fas fa-trash float-right"></i>
+                </a>
+            </td>
+{% endcomment %}
+
+
+
+
+
+  {% comment %} 
         <br>
         <tr>
         <td colspan="5">
         </td>
         </tr>
-        <tr>
-            <td colspan="4">
-             <a class='btn btn-primary float-right' href="{% url 'home' %}">Continue Adding Books</a>
-             </td>
-             <td colspan="5">
-            <a class='btn btn-warning float-right' href="#">Confirm Borrow Request</a>
-            </td>
-        </tr>
+     
         
         {% if object.coupon %}
         <tr>
@@ -78,13 +109,6 @@
             <a class='btn btn-primary float-right' href='/'>Continue Adding Books</a>
             </td>
         </tr>
-        {% endif %}
-        </tbody>
-    </table>
+          {% endif %}
 
-    </div>
-
-    </div>
-  </main>
-
-{% endblock content %}
+{% endcomment %}
