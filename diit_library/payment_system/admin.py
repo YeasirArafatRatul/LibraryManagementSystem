@@ -5,7 +5,8 @@ from .models import Payment
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'amount', 'bKash_ac', 'transaction_id', 'is_paid')
+    list_display = ('slug', 'user', 'amount', 'bKash_ac',
+                    'transaction_id', 'is_paid')
     list_filter = ('user', 'bKash_ac', 'is_paid')
 
 

@@ -152,7 +152,7 @@ def search(request):
 
         context = {
             'search_term': search_term,
-            'contacts': search_results.filter(manager=request.user)
+            'books': search_results.filter()
         }
         return render(request, 'search.html', context)
 

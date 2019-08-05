@@ -42,22 +42,6 @@ class Book(models.Model):
         return reverse('remove-from-cart', kwargs={"slug": self.slug})
 
 
-"""
-def unique_slug_generator(instance, new_slug):
-	if new_slug is not None:
-		slug = new_slug
-	else:
-		slug = slugify(instance.name)
-
-	Klass = instance.__class__
-	qs_exists = Klass.objects.filter(slug=slug).exists()
-	if qs_exists:
-		new_slug=f"{category_name}-{name}-{author}"
-		return unique_slug_generator(instance,new_slug=new_slug)
-	return slug
-"""
-
-
 class BookNumber(models.Model):
     book_family = models.ForeignKey(Book, on_delete=models.CASCADE)
     book_code = models.CharField(

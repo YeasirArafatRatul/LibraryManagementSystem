@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-
 {% block title %}
 
 {% endblock title %}
@@ -25,44 +23,7 @@
         <div class="row wow fadeIn">
       {% for book in books %}
           <!--Grid column-->
-          <div class="col-lg-3 col-md-6 mb-4">
-
-            <!--Card-->
-            <div class="card">
-              <!--Card image-->
-              <div class="view overlay">
-                <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
-                  alt="">
-                <a>
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
-              <!--Card image-->
-              <!--Card content-->
-              <div class="card-body text-center">
-                <h4>
-                  <strong>
-                    <a href="{% url 'book-detail' book.slug %}" class="dark-grey-text">{{book.name}}
-                      {% comment %} <span class="badge badge-pill danger-color">NEW</span> {% endcomment %}
-                    </a>
-                  </strong>
-                </h4>
-                <h5 class="font-weight-bold blue-text">
-                  <small>by {{ book.author}}</small>
-                </h5>
-                <!--Category & Title-->
-                <a href="#" class="grey-text">
-                   <small>
-                      <h6>Category {{ book.book_category.category_name }}</h6>
-                  </small>
-                </a>
-                <a href="{{ book.get_add_to_cart_url }}"  class="btn btn-primary btn-md my-0 p">Add To List</a>
-                <a href="{% url 'book-detail' book.slug %}"  class="btn btn-warning btn-md my-0 p">Read More</a>
-              </div>
-              <!--Card content-->
-            </div>
-            <!--Card-->
-          </div>
+            {% include 'partials/_card.html' %}
           <!--Grid column-->
      {% endfor %}
         </div>

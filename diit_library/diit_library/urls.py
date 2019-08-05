@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from all_books.views import HomeView, BorrowSummuryView, PaymentView, confirm
+from all_books.views import HomeView, BorrowSummuryView, PaymentView, confirm, search
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,6 +14,7 @@ urlpatterns = [
          PaymentView.as_view(), name='fine-payment'),
     path('confirm-request/<int:pk>/',
          confirm, name='confirm-request'),
+    path('search/', search, name="search"),
     # path('bkash/', include('bkash.urls')),
     # path('borrow/', include('book_cart.urls')),
 ]
