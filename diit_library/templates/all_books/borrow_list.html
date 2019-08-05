@@ -27,7 +27,7 @@
             <td>{{ book_item.borrow_book.author }}</td>
             <td>{{ book_item.date_added }}</td>
             <td>{{ object.get_return_date }}</td>
-            <td ><a class="btn btn-danger btn-md my-0 p ml-2" href="{% url 'remove-from-cart' book_item.borrow_book.slug %}">X Remove</a>
+            <td ><a class="btn btn-danger btn-md my-0 p ml-2" href="{% url 'remove-from-cart' book_item.borrow_book.slug %}"><i class="fas fa-trash-alt"></i></a>
             
             </td> 
         </tr>
@@ -39,13 +39,17 @@
         </tbody>
     </table>
 
-    <div class="col-sm-3">
-        <a class="btn btn-outline-info btn-md my-0 p" href="{% url 'home' %}">Continue Adding Books</a>
+         <tr>
+         <td colspan='5'>
+         <a class="btn btn-outline-info btn-md my-0 p" href="{% url 'home' %}">Continue Adding Books</a>
+         </td>
+         </tr>
+        <br>
+         <div class="col-sm-3">
         <form  action="{{ object.get_borrow_confirmation }}" method="POST">
 				{% csrf_token %}
-				  
 				<div class="form-row">
-				<button class="btn btn-outline-info" type="submit">Confirm</button> 
+				<button class="btn btn-outline-info float-right" type="submit">Confirm</button> 
 				</div>
 			</form> 
         {% comment %} <a class="btn btn-warning btn-md my-0 p" href="{% url 'confirm-request' %}">Proceed to Final Request</a> {% endcomment %}

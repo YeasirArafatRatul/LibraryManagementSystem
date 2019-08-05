@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from all_books.views import HomeView, BorrowSummuryView, PaymentView, confirm, search
+from slideshow.views import slides
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,7 +16,7 @@ urlpatterns = [
     path('confirm-request/<int:pk>/',
          confirm, name='confirm-request'),
     path('search/', search, name="search"),
-    # path('bkash/', include('bkash.urls')),
+    path('slide/', slides, name='slide')
     # path('borrow/', include('book_cart.urls')),
 ]
 

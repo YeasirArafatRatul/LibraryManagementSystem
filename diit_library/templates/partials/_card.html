@@ -15,19 +15,11 @@
               <!--Card image-->
               <!--Card content-->
                <div class="card-header">
-                  <a href="{% url 'book-detail' book.slug %}" class="dark-grey-text header-link"><i
-                class="fas fa-mars mr-2"></i>{{book.name}}</a>
+                  <a href="{% url 'book-detail' book.slug %}" class="dark-grey-text header-link"><i class="fas fa-book-open"></i> {{book.name}}</a>
               </div>
               <div class="card-body text-center">
-                {% comment %} <h4>
-                  <strong>
-                    <a href="{% url 'book-detail' book.slug %}" class="dark-grey-text">{{book.name}}
-                      {% comment %} <span class="badge badge-pill danger-color">NEW</span> 
-                    </a>
-                  </strong>
-                </h4> {% endcomment %}
                 <h5 class="font-weight-bold blue-text">
-                  <small>by {{ book.author}}</small>
+                  <small><i class="fas fa-pen-fancy"></i> {{ book.author}}</small>
                 </h5>
                 <!--Category & Title-->
                 <a href="#" class="grey-text">
@@ -35,7 +27,7 @@
                       <h6>Category {{ book.book_category.category_name }}</h6>
                   </small>
                 </a>
-                <a href="{{ book.get_add_to_cart_url }}"  class="btn btn-primary btn-md my-0 p">Add To List</a>
+                <a href="{{ book.get_add_to_cart_url }}"  class="btn btn-primary btn-md my-0 p">+Add</a>
                 <a href="{% url 'book-detail' book.slug %}"  class="btn btn-warning btn-md my-0 p">Read More</a>
               </div>
               <!--Card content-->
