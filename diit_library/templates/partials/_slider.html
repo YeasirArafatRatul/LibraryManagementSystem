@@ -1,36 +1,40 @@
  {% load static %}
-
-
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
-<!-- Indicators -->
-<ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-    {% comment %} <li data-target="#myCarousel" data-slide-to="3"></li>
-    <li data-target="#myCarousel" data-slide-to="4"></li>
-    <li data-target="#myCarousel" data-slide-to="5"></li> {% endcomment %}
-</ol>
-
 <!-- Wrapper for slides -->
 <div class="carousel-inner" role="listbox">
-    {% for image in slides %}
+    {% for slide in slides %}
+
     {% if forloop.counter == 1 %}
     <div class="item active">
     {% else %}
     <div class="item">
     {% endif %}
-        <img src="{{ image.image1.url }}" alt="Image" width="460" height="345">
-        <img src="{{ image.image2.url }}" alt="Image" width="460" height="345">
-        <img src="{{ image.image3.url }}" alt="Image" width="460" height="345">
-        <div class="carousel-caption">
-    <h3>{{ image.title }}</h3>
-    <p>{{ image.subtitle }}</p>
-  </div>
+        <img src="{{ slide.image1.url }}" alt="Image" >
+        <img src="{{ slide.image2.url }}" alt="Image" >
+        <img src="{{ slide.image3.url }}" alt="Image" >
+      <div class="carousel-caption">
+	    <h3>{{ slide.title }}</h3>
+	    <p>{{ slide.subtitle }}</p>
+	  </div>
     </div>
     {% endfor %}
+   
     </div>
 
+</div>
+
+
+
+
+
+
+{% comment %} 
+       <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -39,5 +43,4 @@
     <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
-    </a>
-</div>
+    </a> {% endcomment %}

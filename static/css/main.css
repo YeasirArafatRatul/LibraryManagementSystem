@@ -39,18 +39,6 @@ nav {
   color: white;
   text-decoration: none;
 }
-/* form {
-  position: relative;
-}
-button {
-  position: absolute;
-  right: 1px;
-  outline: none;
-  cursor: pointer;
-}
-button i {
-  color: var(--back);
-} */
 
 .search-box {
   border-radius: 20px !important;
@@ -85,24 +73,7 @@ img {
 .header-link:hover {
   text-decoration: none;
 }
-/*.boy-card .card-header {
-  background-color: var(--boy);
-}
-.boy-card .card-body,
-.boy-card .card-body p a {
-  color: var(--boy);
-}
-.girl-card .card-header {
-  background-color: var(--girl);
-}
-.girl-card .card-body,
-.girl-card .card-body p a {
-  color: var(--girl);
-}
-.card-body p {
-  cursor: pointer;
-}*/
-/* Card Styles end */
+
 
 /* Main Section */
 .main-part {
@@ -157,3 +128,4 @@ footer {
   /* footer style ends */
 }
 /* Media Queries Ends*/
+

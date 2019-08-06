@@ -12,6 +12,7 @@ body {
 
 nav {
   font-weight: light;
+  font-size: 1.2em;
   display: flex;
   justify-content: space-around;
   background-color: var(--back);
@@ -21,17 +22,14 @@ nav {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.navbar ul nav-item {
-    color: #FFF;
-}
 .logo {
-  font-size: 30px;
-  letter-spacing: 1px;
+  font-size: 20px;
+  letter-spacing: 0px;
   background: var(--logo); 
   color: white;
   padding: 2px 12px;
   border-radius: 8px;
-  font-family: cursive;
+  font-family: sans-serif;
 }
 
 .feature-link{

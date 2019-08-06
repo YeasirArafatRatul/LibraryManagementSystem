@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-
+from slideshow.models import SlideShow
 # Create your views here.
 
 
@@ -24,6 +24,11 @@ class HomeView(LoginRequiredMixin, ListView):
     paginate_by = 12
     template_name = 'all_books/home.html'  # books/home.html
     context_object_name = 'books'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['slides'] = SlideShow.objects.all()
+        return context
 
 
 class DetailsView(LoginRequiredMixin, DetailView):
