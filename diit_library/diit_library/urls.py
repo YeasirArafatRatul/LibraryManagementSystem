@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from all_books.views import HomeView, BorrowSummuryView, PaymentView, confirm, search
+from all_books.views import HomeView, BorrowSummuryView, PaymentView, confirm, search, RecordKeeping, send_mail, fine
 from slideshow.views import slides, SlideShowView
 
 urlpatterns = [
@@ -17,8 +17,12 @@ urlpatterns = [
          confirm, name='confirm-request'),
     path('search/', search, name="search"),
     path('slide/', slides, name='slide'),
-    path('slideshow/', SlideShowView.as_view(), name='slideshow')
-    # path('borrow/', include('book_cart.urls')),
+    path('slideshow/', SlideShowView.as_view(), name='slideshow'),
+    path('admin/records/', RecordKeeping.as_view(), name='records'),
+    path('admin/records/fine', fine, name='fine'),
+    path('admin/records/fine_paid', PaymentView.as_view(), name='fine-list')
+
+
 ]
 
 if settings.DEBUG:

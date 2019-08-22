@@ -10,7 +10,7 @@ class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)
     is_paid = models.BooleanField(default=False)
-    bKash_ac = models.IntegerField(max_length=11)
+    bKash_ac = models.IntegerField()
     transaction_id = models.CharField(max_length=15)
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
 

@@ -14,12 +14,13 @@
 				<h2>Login</h2>
 				{% csrf_token %}
 				{{ form|crispy }}<!--  {{ form.as_p }} -->
-				<input type="submit" value="Login"/>
+				<input class="btn btn-outline-info" type="submit" value="Login"/>
 			</form>
 			<div class="border-top pt-4">
 				<small class="text-muted">Need An Account?<a class="ml-2" href="{% url 'register' %}">Sign Up</a>
 				</small>
 		</div>
+	</div>
 	</div>
 </body>
 {% endblock %}

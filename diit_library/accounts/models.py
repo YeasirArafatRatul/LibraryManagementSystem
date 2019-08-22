@@ -72,7 +72,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     full_name = models.CharField(max_length=15)
     batch = models.IntegerField(null=True, blank=True)
-    class_id = models.IntegerField(unique=True)  # , null=True, blank=True
+    class_id = models.IntegerField(unique=True, null=True, blank=True)
     department = models.CharField(max_length=15)
     id_card_number = models.CharField(max_length=15, unique=True)
     email = models.EmailField(max_length=50, unique=True)

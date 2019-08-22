@@ -11,4 +11,3 @@ class SignUpView(CreateView):
     form_class = RegisterForm
     template_name = 'accounts/registration.html'
     success_url = reverse_lazy('home')
-

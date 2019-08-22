@@ -1,0 +1,63 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if user.is_staff %}
+
+  <main>
+    <div class="container">
+    <div class="table-responsive text-nowrap">
+    <h4 text-align="center">Fine List</h4>
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Borrower</th>
+            <th scope="col">Fine(TK)</th>
+            <th scope="col">Paid</th>
+            <th scope="col">Transaction Id</th>
+            <th scope="col">BKash</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for data in fines %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ data.to_email.email }}</td>
+            <td>{{ data.amount }}</td>
+            <td>{{ data.get_return_date }}</td>
+            <td>{% if data.is_borrowed %} Yes {% else %}  No {% endif %}
+
+            </td>
+            <td>
+				<a href = "{% url 'fine' %}" class="btn btn-outline-info float-right" type="submit">Fine</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan='5'>Your list is empty</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div>
+
+    </div>
+
+    </div>
+  </main>
+
+
+
+{% else %}
+<div class="container" align="center">
+<h2> You on't have the permission to access in admin panel </h2>
+</div>
+{% endif %}
+
+{% endblock %}

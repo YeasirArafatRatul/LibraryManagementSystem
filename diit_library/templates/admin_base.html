@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+ <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'static_files/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static './css/main.css' %}" />
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+
+	{% if title %}
+	<title>DIIT Library - {{ title }}</title>
+	{% else %}
+		<title>DIIT Library</title>
+	{% endif %}
+</head>
+
+
+   <body>
+   	<nav class="navbar navbar-expand-lg navbar-light white scrolling-navbar">
+
+   	<div class="container">
+	  
+      
+	<!-- image  -->
+     <a class="logo" href="#">
+            <i class="fas fa-book"></i>&nbsp;D I I T-LIBRARY
+        </a>
+
+  	{% comment %} <span class="navbar-brand nav-link mb-0 h1" href="{% url 'home' %}">D I I T-LIBRARY</span> {% endcomment %}
+
+  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  	<span class="navbar-toggler-icon"></span>
+  	</button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar Left Side -->
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item">
+	        <a class="nav-link waves-effect" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+	      </li>
+      </ul>
+
+      <form class="form-inline my-2" action="{% url 'search' %}" method="GET">
+            <input 
+                class="form-control search-box" 
+                type="search" 
+                placeholder="Find books..." 
+                name="search_term" 
+                value = "{{search_term}}"
+            />
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+
+			<!-- Navbar Right Side -->
+        <ul class="navbar-nav nav-flex-icons">
+          {% if user.is_authenticated %}
+          {% comment %} <li class="nav-item">
+            <a href="{% url 'borrow-list' %}" class="nav-link waves-effect">
+              <span class="clearfix d-none d-sm-inline-block"> Borrow List </span>
+              <i class="fas fa-book"></i><span class="badge red z-depth-1 mr-1"> 
+              {{ request.user|cart_item_count }}</span>
+    
+            </a>
+          </li> {% endcomment %}
+
+            <li>
+             <a class="nav-item nav-link" href="#">Profile</a> {% comment %} {% url 'profile' %} {% endcomment %}
+             </li>
+             
+            <li>
+              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+           
+             </ul>
+          {% else %}
+          	<li>
+          		<a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+          	</li>
+          	<li>
+            		<a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+          	</li>
+          {% endif %}
+        </ul>
+	
+	  </div> 
+	</div>
+</nav>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+{% endfor %}
+{% endif %}
+<br>
+
+{% block content %}
+
+
+{% endblock %}
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+    <hr class="my-4"> 
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      <h5><small>© 2019 Copyright: diit-ibrary</small></h5>
+      <h6><small>Website: <a href= "#http://diit.edu.bd" target="">diit.edu.bd</a></small></h6>
+      <h6><small>Developed By : Ratul - Ayub - Meraj - Tonmoy</small></h6>
+    </div>
+    <!--/.Copyright-->
+  </footer>
+  <!--/.Footer-->
+
+
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static  'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+  
+  <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+  </script>
+  </body>
+</html> 

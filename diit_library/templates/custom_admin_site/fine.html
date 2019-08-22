@@ -1,0 +1,27 @@
+{% extends "admin_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<head>
+	<title>Fine</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	
+	<div class="container" align="center">
+		<div class = " col-sm-3">
+			<form class = "box" method='POST'>
+				<h2>Fine User </h2>
+				{% csrf_token %}
+				{{ form|crispy }}<!--  {{ form.as_p }} -->
+				<input class="btn btn-outline-info" type="submit" value="Notify With An Email"/>
+			</form>
+			<br>
+			<div class="border-top pt-4">
+				<small class="text-muted">Go Back<a class="ml-2" href="{% url 'records' %}">Borrower List</a>
+				</small>
+		</div>
+	</div>
+    </div>
+</body>
+{% endblock %}

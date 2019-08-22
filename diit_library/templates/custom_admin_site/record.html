@@ -1,0 +1,63 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if user.is_staff %}
+
+  <main>
+    <div class="container">
+    <div class="table-responsive text-nowrap">
+    <h4 text-align="center"> Your Books List </h4>
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Borrower</th>
+            <th scope="col">Borrow Date</th>
+            <th scope="col">Return Date</th>
+            <th scope="col">Returned?</th>
+            <th scope="col">Fine</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for data in borrowed_list %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ data.borrower.email }}</td>
+            <td>{{ data.borrow_date }}</td>
+            <td>{{ data.get_return_date }}</td>
+            <td>{% if data.is_borrowed %} Yes {% else %}  No {% endif %}
+
+            </td>
+            <td>
+				<a href = "{% url 'fine' %}" class="btn btn-outline-info float-right" type="submit">Fine</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan='5'>Your list is empty</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div>
+
+    </div>
+
+    </div>
+  </main>
+
+
+
+{% else %}
+<div class="container" align="center">
+<h2> You on't have the permission to access in admin panel </h2>
+</div>
+{% endif %}
+
+{% endblock %}

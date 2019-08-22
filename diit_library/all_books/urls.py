@@ -8,4 +8,5 @@ urlpatterns = [
     path('<slug>/borrow/', add_to_cart, name='add-to-cart'),
     path('<slug>/remove/', remove_from_cart, name='remove-from-cart'),
 
+
 ]

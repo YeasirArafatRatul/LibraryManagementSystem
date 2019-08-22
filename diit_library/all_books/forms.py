@@ -1,12 +1,8 @@
-# from django import forms
-# from .models import Borrow
+from django import forms
+from .models import Fine
 
 
-# class ConfirmationForm(forms.Form):
-#     class Meta:
-#         model = Borrow
-#         fields = ('is_borrowed', 'borrow_date', 'return_date')
-
-#     # confirm = forms.BooleanField(required=True,
-#     #                              initial=False,
-#     #                              label='Confirm Request')
+class FineForm(forms.ModelForm):
+    class Meta:
+        model = Fine
+        fields = ('to_email', 'amount', 'message')

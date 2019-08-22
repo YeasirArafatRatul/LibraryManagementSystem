@@ -4,8 +4,9 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from accounts.models import UserProfile, User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from diit_library.utils import unique_slug_generator
 
 # from book_cart.views import add_to_cart
 
@@ -23,8 +24,8 @@ class Category(models.Model):
 
 class Book(models.Model):
     book_category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=20)
-    author = models.CharField(max_length=30)
+    name = models.CharField(max_length=40)
+    author = models.CharField(max_length=40)
     quantity = models.IntegerField()
     image = models.ImageField(upload_to='books_images', null=True, blank=True)
     slug = models.SlugField(unique=True)
@@ -40,6 +41,19 @@ class Book(models.Model):
 
     def get_remove_from_cart_url(self):
         return reverse('remove-from-cart', kwargs={"slug": self.slug})
+
+    @property
+    def title(self):
+        return(name + book_category)
+
+
+def slug_generator(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+
+# Connecting Payment Model with the 'unique_slug_generator' function
+pre_save.connect(slug_generator, sender=Book)
 
 
 class BookNumber(models.Model):
@@ -72,17 +86,14 @@ class BorrowItem(models.Model):
 
 
 class Borrow(models.Model):
-    ref_code = models.CharField(max_length=15, null=True, blank=True)
-    # add many items to one order
-    items = models.ManyToManyField(BorrowItem)
+    items = models.ManyToManyField(BorrowItem)  # add many items to one order
     # if we delete an order than it doesn't delete the profile
-    borrower = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True)
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     is_borrowed = models.BooleanField(default=False)
-    # fine = models.ForeignKey(
-    # Payment, null=True, on_delete=models.SET_NULL, blank=True)
+    # fine = models.ForeignKey(Payment, null=True, on_delete=models.SET_NULL, blank=True)
     borrow_date = models.DateTimeField(auto_now=True)
     return_date = models.DateTimeField(null=True)
+    slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
 
     class Meta:
         ordering = ["-borrow_date"]
@@ -99,3 +110,32 @@ class Borrow(models.Model):
 
     def get_borrow_confirmation(self):
         return reverse('confirm-request', kwargs={"pk": self.pk})
+
+    def get_send_mail(self):
+        return reverse('send-mail', kwargs={"pk": self.pk})
+
+    @property
+    def title(self):
+        return('borrow-request-')
+
+
+def slug_generator(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+
+# Connecting Payment Model with the 'unique_slug_generator' function
+pre_save.connect(slug_generator, sender=Borrow)
+
+
+class Fine(models.Model):
+    to_email = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    message = models.TextField(max_length=1000)
+    date = models.DateField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Fine List"
+
+    def __str__(self):
+        return self.to_email.email

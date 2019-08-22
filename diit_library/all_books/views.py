@@ -1,8 +1,3 @@
-from .models import Book
-from accounts.models import UserProfile, User
-from .models import Borrow, BorrowItem
-# from .forms import ConfirmationForm
-
 import datetime
 from django.db.models import Q
 from django.utils import timezone
@@ -10,12 +5,20 @@ from django.conf import settings
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.core.exceptions import ObjectDoesNotExist
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from slideshow.models import SlideShow
+from payment_system.models import Payment
+from .models import Book
+from accounts.models import UserProfile, User
+from .models import Borrow, BorrowItem, Fine
+from diit_library.settings import EMAIL_HOST_USER
+from django.core.mail import BadHeaderError, send_mail
+from django.http import HttpResponse, HttpResponseRedirect
+from all_books.forms import FineForm
 # Create your views here.
 
 
@@ -107,12 +110,6 @@ def remove_from_cart(request, slug):
     return redirect("borrow-list")
 
 
-class PaymentView(View):
-
-    def get(self, *args, **kwargs):
-        return render(self.request, "payment.html")
-
-
 @login_required
 def confirm(request, pk):
     if request.method == 'POST':
@@ -132,20 +129,6 @@ def confirm(request, pk):
     return redirect("home")
 
 
-# class ConfirmView(View):
-#     def get(self, *args, **kwargs):
-#         return render(self.request, "all_books/borrow_list.html")
-
-#     def post(self, *args, **kwargs):
-#         borrow = Borrow.objects.get(
-#             borrower=self.request.user, is_borrowed=False)
-#         borrow.is_borrowed = True
-#         borrow.borrow_date = datetime.now()
-#         borrow.return_date = borrow.borrow_date + datetime.timedelta(days=7)
-#         borrow.save()
-#         return redirect('home')
-
-
 @login_required
 def search(request):
     if request.GET:
@@ -163,3 +146,43 @@ def search(request):
 
     else:
         return redirect('home')
+
+
+class RecordKeeping(LoginRequiredMixin, ListView):
+    model = Borrow
+    template_name = 'custom_admin_site/record.html'
+    context_object_name = 'borrowed_list'
+
+
+def fine(request, commit=True):
+    form = FineForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        to_email = form.cleaned_data.get("to_email")
+        amount = form.cleaned_data.get("amount")
+        message = form.cleaned_data.get("message")
+        subject = 'You are Fined'
+        from_email = EMAIL_HOST_USER
+        formatted_message = f'{message + "Payable amount:" + str(amount)}'
+        reciever = [instance.to_email.email]
+        send_mail(subject=subject, message=formatted_message, from_email=from_email,
+                  recipient_list=reciever, fail_silently=False)
+        form.save()
+        messages.success(request, "Email Sent Succesfully")
+
+    context = {
+        "form": form,
+    }
+
+    return render(request, "custom_admin_site/fine.html", context)
+
+
+class PaymentView(LoginRequiredMixin, ListView):
+    model = Fine
+    template_name = 'custom_admin_site/fine_paid.html'
+    context_object_name = 'fines'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['payments'] = Payment.objects.all()
+        return context
