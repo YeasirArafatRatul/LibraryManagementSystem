@@ -79,14 +79,19 @@
           </li>
 
             <li>
-             <a class="nav-item nav-link" href="#">Profile</a> {% comment %} {% url 'profile' %} {% endcomment %}
+             <a class="nav-item nav-link" href="{% url 'fine-payment' %}">Pay Fine</a> {% comment %} {% url 'profile' %} {% endcomment %}
              </li>
              
             <li>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
+            {% if user.is_staff %}
+            <li>
+             <a class="nav-item nav-link" href="{% url 'records' %}">Admin</a> {% comment %} {% url 'profile' %} {% endcomment %}
+             </li>
            
              </ul>
+               {% endif %}
           {% else %}
           	<li>
           		<a class="nav-item nav-link" href="{% url 'login' %}">Login</a>

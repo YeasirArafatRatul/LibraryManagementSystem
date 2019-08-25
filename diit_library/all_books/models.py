@@ -26,8 +26,10 @@ class Book(models.Model):
     book_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
     author = models.CharField(max_length=40)
+    publications = models.CharField(max_length=100, null=True, blank=True)
     quantity = models.IntegerField()
     image = models.ImageField(upload_to='books_images', null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     slug = models.SlugField(unique=True)
 
     def __str__(self):
@@ -90,7 +92,8 @@ class Borrow(models.Model):
     # if we delete an order than it doesn't delete the profile
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     is_borrowed = models.BooleanField(default=False)
-    # fine = models.ForeignKey(Payment, null=True, on_delete=models.SET_NULL, blank=True)
+    is_approved = models.BooleanField(default=False)
+    is_returned = models.BooleanField(default=False)
     borrow_date = models.DateTimeField(auto_now=True)
     return_date = models.DateTimeField(null=True)
     slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)

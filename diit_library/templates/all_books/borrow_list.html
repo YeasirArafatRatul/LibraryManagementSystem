@@ -39,81 +39,22 @@
         {% endfor %}
         </tbody>
     </table>
-
-         <tr>
-         <td colspan='5'>
-         <a class="btn btn-outline-info btn-md my-0 p" href="{% url 'home' %}">Continue Adding Books</a>
-         </td>
-         </tr>
-        <br>
-         <div class="col-sm-3">
-        <form  action="{{ object.get_borrow_confirmation }}" method="POST">
+        <div class="col-sm-5">
+            <form  action="{{ object.get_borrow_confirmation }}" method="POST">
 				{% csrf_token %}
 				<div class="form-row">
-				<button class="btn btn-outline-info float-right" type="submit">Confirm</button> 
+				<button class="btn btn-outline-info float-right" type="submit">Confirm Request</button> 
 				</div>
-			</form> 
-        {% comment %} <a class="btn btn-warning btn-md my-0 p" href="{% url 'confirm-request' %}">Proceed to Final Request</a> {% endcomment %}
+                <br>
+                <div>
+                <a class="btn btn-outline-info btn-md my-0 p" href="{% url 'home' %}">Continue Adding Books</a>
+                </div>
+			</form>   
         </div>
-
+        
     </div>
 
     </div>
   </main>
 
 {% endblock content %}
-
-
-
-
- {% comment %}
-             <td>
-                <a href="{% url 'remove-from-cart' book_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
-                {{ book_item.borrow_date }}
-                <a href="{% url 'add-to-cart' book_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a> 
-            </td>
-            <td>
-                {% if book_item.item.discount_price %}
-                    ${{ book_item.get_total_discount_item_price }}
-                    <span class="badge badge-primary">Saving ${{ book_item.get_amount_saved }}</span>
-                {% else %}
-                    ${{ book_item.get_total_item_price }}
-                {% endif %} 
-                <a style='color: red;' href="{% url 'remove-from-cart' order_item.item.slug %}">
-                    <i class="fas fa-trash float-right"></i>
-                </a>
-            </td>
-{% endcomment %}
-
-
-
-
-
-  {% comment %} 
-        <br>
-        <tr>
-        <td colspan="5">
-        </td>
-        </tr>
-     
-        
-        {% if object.coupon %}
-        <tr>
-            <td colspan="4"><b>Coupon</b></td>
-            <td><b>-${{ object.coupon.amount }}</b></td>
-        </tr>
-        {% endif %}
-        {% if object.get_total %}
-        <tr>
-            <td colspan="4"><b>Order Total</b></td>
-            <td><b>${{ object.get_total }}</b></td>
-        </tr>
-        <tr>
-            <td colspan="5">
-            <a class='btn btn-warning float-right ml-2' href='/checkout/'>Proceed to Final Request</a>
-            <a class='btn btn-primary float-right' href='/'>Continue Adding Books</a>
-            </td>
-        </tr>
-          {% endif %}
-
-{% endcomment %}

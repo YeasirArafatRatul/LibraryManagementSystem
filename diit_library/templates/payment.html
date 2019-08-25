@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<head>
+	<title>Fine</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	
+	<div class="container" align="center">
+		<div class = " col-sm-3">
+			<form class = "box" method='POST'>
+				<h2>Give Your Payment Details After Paying </h2>
+                <h6>bKash : 019******** </h6>
+				{% csrf_token %}
+				{{ form|crispy }}<!--  {{ form.as_p }} -->
+				<input class="btn btn-outline-info" type="submit" value="Submit"/>
+			</form>
+			<br>
+			<div class="border-top pt-4">
+				<small class="text-muted">Go Back To Home <a class="ml-2" href="{% url 'home' %}">Borrower List</a>
+				</small>
+		</div>
+	</div>
+    </div>
+</body>
+{% endblock %}

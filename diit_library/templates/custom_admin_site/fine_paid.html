@@ -26,22 +26,23 @@
 
         <tbody>
         {% for data in fines %}
+        
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ data.to_email.email }}</td>
             <td>{{ data.amount }}</td>
-            <td>{{ data.get_return_date }}</td>
-            <td>{% if data.is_borrowed %} Yes {% else %}  No {% endif %}
-
-            </td>
-            <td>
-				<a href = "{% url 'fine' %}" class="btn btn-outline-info float-right" type="submit">Fine</a>
-            </td>
+            {% for data in payments %}
+            <td>{% if data.is_paid %} Yes {% else %}  No {% endif %}
+            <td>{{ data.transaction_id }}</td>
+            <td>{{ data.bKash_ac }}</td>
+            {% endfor %}
         </tr>
+
         {% empty %}
         <tr>
             <td colspan='5'>Your list is empty</td>
         </tr>
+   
         {% endfor %}
         </tbody>
     </table>

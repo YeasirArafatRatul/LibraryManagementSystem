@@ -135,7 +135,8 @@ def search(request):
         search_term = request.GET['search_term']
         search_results = Book.objects.filter(
             Q(name__icontains=search_term) |
-            Q(author__icontains=search_term)
+            Q(author__icontains=search_term) |
+            Q(book_category__category_name__icontains=search_term)
         )
 
         context = {

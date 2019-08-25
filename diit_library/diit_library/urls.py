@@ -4,15 +4,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from all_books.views import HomeView, BorrowSummuryView, PaymentView, confirm, search, RecordKeeping, send_mail, fine
 from slideshow.views import slides, SlideShowView
+from payment_system.views import finepayment
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', HomeView.as_view(), name='home'),
+    path('', HomeView.as_view(), name='home'),
     path('accounts/', include('accounts.urls')),
     path('books/', include('all_books.urls')),
     path('borrow-list/', BorrowSummuryView.as_view(), name='borrow-list'),
     path('fine/payment/<payment-option>',
-         PaymentView.as_view(), name='fine-payment'),
+         finepayment, name='fine-payment'),
     path('confirm-request/<int:pk>/',
          confirm, name='confirm-request'),
     path('search/', search, name="search"),

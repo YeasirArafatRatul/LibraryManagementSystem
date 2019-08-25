@@ -1,13 +1,13 @@
 from django.db import models
 from accounts.models import User
-from all_books.models import Borrow
+from all_books.models import Borrow, Fine
 from django.db.models.signals import pre_save
 from diit_library.utils import unique_slug_generator
 # Create your models here.
 
 
 class Payment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.EmailField(max_length=50, unique=True)
     amount = models.IntegerField(default=0)
     is_paid = models.BooleanField(default=False)
     bKash_ac = models.IntegerField()
@@ -15,7 +15,7 @@ class Payment(models.Model):
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
 
     def __str__(self):
-        return self.user.email
+        return self.user
 
     @property
     def title(self):
