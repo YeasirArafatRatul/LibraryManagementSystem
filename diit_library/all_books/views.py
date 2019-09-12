@@ -19,7 +19,8 @@ from diit_library.settings import EMAIL_HOST_USER
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from all_books.forms import FineForm
-# Create your views here.
+#from all_books.tasks import fine_user
+from background_task import background
 
 
 class HomeView(LoginRequiredMixin, ListView):
@@ -117,6 +118,8 @@ def confirm(request, pk):
             borrow = Borrow.objects.get(
                 pk=pk, borrower=request.user, is_borrowed=False)
             borrow.is_borrowed = True
+            current_date = timezone.now()
+            borrow.return_date = current_date + datetime.timedelta(days=7)
             borrow.save()
             messages.info(
                 request, "Your Request Is Submitted To The Librarian")
@@ -155,6 +158,8 @@ class RecordKeeping(LoginRequiredMixin, ListView):
     context_object_name = 'borrowed_list'
 
 
+# this function works well when i call it.
+
 def fine(request, commit=True):
     form = FineForm(request.POST or None)
     if form.is_valid():
@@ -187,3 +192,22 @@ class PaymentView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['payments'] = Payment.objects.all()
         return context
+
+
+# just checking
+# @background(schedule=10)
+# def hello():
+#     subject = "Hello"
+#     message = "Checking ... function...Boss"
+#     from_email = EMAIL_HOST_USER
+
+#     send_mail(subject=subject, message=message, from_email=from_email,
+#               recipient_list=['itsaiub@gmail.com', ], fail_silently=False)
+#     print("email sent")
+
+#     print("Hello Ratul!")
+
+
+# def background_task_view(request):
+#      hello()
+#     return HttpResponse("Hello World")

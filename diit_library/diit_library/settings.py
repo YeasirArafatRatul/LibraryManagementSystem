@@ -30,7 +30,8 @@ ALLOWED_HOSTS = []
 # changes the built_in userModel to Custom user model
 AUTH_USER_MODEL = 'accounts.User'
 
-
+MAX_ATTEMPTS = 1
+BACKGROUND_TASK_RUN_ASYNC = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'crispy_forms',
+    'background_task',
 
     # my app
     'accounts',

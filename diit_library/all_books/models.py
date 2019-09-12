@@ -108,9 +108,6 @@ class Borrow(models.Model):
     def get_book_items(self):
         return self.items.all()
 
-    def get_return_date(self):
-        return self.borrow_date + datetime.timedelta(days=7)
-
     def get_borrow_confirmation(self):
         return reverse('confirm-request', kwargs={"pk": self.pk})
 
@@ -120,6 +117,10 @@ class Borrow(models.Model):
     @property
     def title(self):
         return('borrow-request-')
+
+    @property
+    def get_return_date(self):
+        return self.borrow_date + datetime.timedelta(days=7)
 
 
 def slug_generator(sender, instance, *args, **kwargs):
