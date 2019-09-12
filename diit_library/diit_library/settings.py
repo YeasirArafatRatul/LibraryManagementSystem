@@ -153,6 +153,6 @@ LOGIN_REDIRECT_URL = '/'
 EMAIL_USE_TLS = True  # TLS = Transport Layout Security
 EMAIL_HOST_SSL = False
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'diitdigital.library@gmail.com'
-EMAIL_HOST_PASSWORD = 'admin2428'
+EMAIL_HOST_USER = 'your email'
+EMAIL_HOST_PASSWORD = 'your email password'
 EMAIL_PORT = 587
