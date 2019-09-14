@@ -24,8 +24,7 @@ urlpatterns = [
     path('admin/records/', RecordKeeping.as_view(), name='records'),
     path('admin/records/fine', fine, name='fine'),
     path('admin/records/fine_paid', PaymentView.as_view(), name='fine-list'),
-    path('background/', background_task_view, name="background_task")
-
+    
 
 ]
 fine_users(repeat=Task.DAILY)
