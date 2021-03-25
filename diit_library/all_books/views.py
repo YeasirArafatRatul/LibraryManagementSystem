@@ -19,8 +19,8 @@ from diit_library.settings import EMAIL_HOST_USER
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from all_books.forms import FineForm
-#from all_books.tasks import fine_user
-from background_task import background
+# from all_books.tasks import fine_user
+# from background_task import background
 
 
 class HomeView(LoginRequiredMixin, ListView):

@@ -5,8 +5,8 @@ from django.conf.urls.static import static
 from all_books.views import HomeView, BorrowSummuryView, PaymentView, confirm, search, RecordKeeping, send_mail, fine
 from slideshow.views import slides, SlideShowView
 from payment_system.views import finepayment
-from all_books.tasks import fine_users
-from background_task.models import Task
+# from all_books.tasks import fine_users
+# from background_task.models import Task
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,7 @@ urlpatterns = [
     
 
 ]
-fine_users(repeat=Task.DAILY)
+# fine_users(repeat=Task.DAILY)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
